@@ -18,6 +18,12 @@ enum APIKEYTYPE{
   TEST
 }
 
+enum TrxnStatus{
+  COMPLETED
+  PENDING
+  FAILED
+}
+
 model User{
     id String @id @default(uuid(7))
     first_name String
@@ -34,6 +40,8 @@ model User{
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
     api ApiKeys[]
+    virtualaccount VirtualAccounts[]
+    transactions Transactions[]
 
     @@index([id, email, phone])
 }
@@ -50,4 +58,33 @@ model ApiKeys {
   updated_at DateTime @updatedAt
 
   @@index([user_id, api_key])
+}
+
+model VirtualAccounts{
+  id String @id @default(uuid(7))
+  acc_num String
+  bank_name String
+  amount BigInt
+  is_valid Boolean @default(true)
+  expires_at DateTime
+  user User? @relation(fields: [user_id], references: [id])
+  user_id String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  transactions Transactions[]
+
+  @@index([user_id, id])
+}
+
+model Transactions{
+  id String @id @default(uuid(7))
+  user User? @relation(fields: [user_id], references: [id])
+  user_id String
+  virtual_account VirtualAccounts? @relation(fields: [virtual_acc_id], references: [id])
+  virtual_acc_id String?
+  amount BigInt
+  customer_email String
+  status TrxnStatus
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
