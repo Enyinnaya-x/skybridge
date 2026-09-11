@@ -24,4 +24,4 @@ It provides an end-to-end sandbox environment where users can create accounts, m
 
 ## Purpose
 
-Skybridge was built to showcase enterprise-grade fintech application design, developer tooling ergonomics, and secure payment processing workflows.
+Skybridge was built to showcase enterprise-grade fintech application design, developer tooling ergonomics, and secure payment processing workflows. **Still in development**
